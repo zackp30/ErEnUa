@@ -43,8 +43,6 @@ class Ranks(handler.Handler):
 					else:
 						self.commands.privmsg(nick, "Wrong code.")
 					self.addowner(nick)
-				else:
-					self.commands.privmsg(nick, "Sorry, I do not have this command in my database. You may want to try 'addowner <CODE> <USERNAME>'.")
 			elif len(msg_words) >= 1 and msg_words[0] == "addowner":
 				self.commands.privmsg(nick, "Not enough arguments, try: 'addowner <CODE> <USERNAME>'.")
 				self.addowner(nick)

@@ -1,17 +1,8 @@
-# Daniel0108's bot
-TheDarkForce.py
-
 # Python compiled
 *.pyc
 
 # Logs, Factoids, Goodies, Channels, and so on...
 *.txt
-
-# TheEyes' bot files (mode commit)
-iForceBot.py
-
-# MichealH's bot.
-MHMirror.py
 
 # vim swap files
 *.swp
@@ -22,6 +13,5 @@ MHMirror.py
 # Lock files
 ~*
 *~
-
-# Mkaysi's bot.
-OtusForceBot.py
+# ErEnUa
+ErEnUa.py
