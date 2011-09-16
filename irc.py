@@ -9,13 +9,14 @@ import re
 import pymongo
 
 class Client(object):
-	def __init__(self, nick=None, password=None, ident=None, realname=None, host=None, port=6667, modules=[]):
+	def __init__(self, nick=None, password=None, ident=None, realname=None, host=None, port=6667, modules=[], alternateNick=None):
 		self.nick = nick
 		self.ident = ident
 		self.realname = realname
 		self.host = host
 		self.port = port
 		self.password = password
+		self.alternatenick = alternateNick
 		
 		self.irc = None
 		self.connected = False
@@ -125,14 +126,16 @@ class Client(object):
 					self.send("PONG %s" % words[1])
 					
 				if words[1] == "433":
-					print "Nickname '%s' is in use. Trying to use '%s_'" (self.nick, self.nick)
-					self.nick += '_'
-					self.commands.nick(self.nick)
+					print "Nickname is in use. Trying alternate nick."
+					self.commands.nick(self.alternatenick)
 				elif words[1] == "NICK":
 					if words[0].find(':%s!' % self.nick) == 0:
 						self.nick = words[2][1:]
 						print 'Nick: ' + self.nick
-						
+				
+				if words[1] == "004":
+					print "Server version is %s" % words[4]
+				
 				self.handle(words)
 
 class Commands(object):
