@@ -12,6 +12,7 @@ class Debug(handler.Handler):
 		msg_words = msg.split(' ')
 		nick = line.split(':')[1].split('!')[0]
 		hostmask = line.split(':')[1].split('@')[1].split(' PRIVMSG')[0]
+		ident = line.split(':')[1].split('!')[1].split('@')[0]
 		target = words[2]
 
 		if target.find('#') != 0:
@@ -53,10 +54,9 @@ class Debug(handler.Handler):
 					else:
 						self.commands.msg("err_permissions", target, nick)
 				elif self.commands.getcmd(msg_words[0], 'hostmask'):
-					self.commands.privmsg(target, '%s: Your hostmask is %s (hopefully)' % (nick, hostmask))
-
-
-
+					self.commands.privmsg(target, '%s: Your hostmask is %s' % (nick, hostmask))
+				elif self.commands.getcmd(msg_words[0], 'ident'):
+					self.commands.privmsg(target, '%s: Your ident is %s' % (nick, ident))
 
 
 

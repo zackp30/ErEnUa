@@ -133,9 +133,6 @@ class Client(object):
 						self.nick = words[2][1:]
 						print 'Nick: ' + self.nick
 				
-				if words[1] == "004":
-					print "Server version is %s" % words[4]
-				
 				self.handle(words)
 
 class Commands(object):
