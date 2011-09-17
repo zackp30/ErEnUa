@@ -30,3 +30,5 @@ class Ping(handler.Handler):
 				self.commands.msg("version", target, nick)
 			elif self.commands.getcmd(msg_words[0], 'source'):
 				self.commands.msg("source", target, nick)
+			elif self.commands.getcmd(msg_words[0], 'credits'):
+				self.commands.msg("credits", target)
