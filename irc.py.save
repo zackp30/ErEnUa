@@ -299,7 +299,7 @@ class Commands(object):
 
 		title = re.sub("[^0-9a-zA-Z_]", "", title)
 
-		output = open("./messages/%s.%s.msg" % (title.lower(), self.getvar('language')), 'r+')
+		output = open("./messages/%s.%s.msg" % (title.lower(), 'r+')
 		try:
 			msgs = output.readlines()
 		finally:

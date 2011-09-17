@@ -1,6 +1,5 @@
 TODO LIST:
 
-Get SetLang working
 Get prefixes for PRIVMSG's to the bot to be ignored
 Add hooks for the registration API
 Allow modules to force a 'core' mode (no unload, higher priority)

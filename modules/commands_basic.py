@@ -49,3 +49,7 @@ class Commands_basic(handler.Handler):
                                 self.commands.privmsg(target, msg)
                         elif self.commands.getcmd(msg_words[0], 'modules') and self.commands.getrank(nick) <= 2:
                                 self.commands.msg("err_permissions", nick, notice=True)
+
+			if self.commands.getcmd(msg_words[0], 'setlang') and self.commands.getrank(nick) == 7:
+				self.commands.setvar('language', msg_words[1])
+				self.commands.notice(nick, "Language changed to '%s'" % msg_words[1])
