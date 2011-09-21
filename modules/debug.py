@@ -58,8 +58,9 @@ class Debug(handler.Handler):
 				elif self.commands.getcmd(msg_words[0], 'ident'):
 					self.commands.privmsg(target, '%s: Your ident is %s' % (nick, ident))
 
-
-
+				if self.commands.getcmd(msg_words[0], 'whois'):
+					self.commands.whois(msg_words[1])
+				
 
 
 

@@ -37,14 +37,15 @@ class Client(object):
 			raise IRCError('Cannot create socket: Already created')
 		if self.nick is None:
 			raise IRCError('Cannot connect: Nick is not set')
-		if self.password is None:
-			raise IRCError('Cannot connect: Password is not set')
 		if self.ident is None:
-			raise IRCError('Cannot connect: Ident is not set')
+			self.ident = 'ErEnUa'
 		if self.realname is None:
-			raise IRCError('Cannot connect: Realname is not set')
+			self.realname = 'ErEnUa'
 		if self.host is None:
 			raise IRCError('Cannot connect: Host is not set')
+		if self.alternatenick is None:
+			self.alternatenick = self.nick
+			self.alternatenick += '_'
 		
 		self.irc = socket.socket()
 		self.irc.connect((self.host, self.port))
@@ -113,7 +114,6 @@ class Client(object):
 			
 			while buffer.find("\n") != -1:
 				line, buffer = buffer.split("\n", 1)
-
 				line = line.rstrip()
 				
 				if(line == ""):
@@ -131,8 +131,7 @@ class Client(object):
 				elif words[1] == "NICK":
 					if words[0].find(':%s!' % self.nick) == 0:
 						self.nick = words[2][1:]
-						print 'Nick: ' + self.nick
-				
+						print 'Nick: ' + self.nick 
 				self.handle(words)
 
 class Commands(object):
@@ -298,13 +297,18 @@ class Commands(object):
 			return False
 
 		title = re.sub("[^0-9a-zA-Z_]", "", title)
-
-		output = open("./messages/%s.%s.msg" % (title.lower(), self.getvar('language')), 'r+')
-		try:
-			msgs = output.readlines()
-		finally:
-			output.close()
-
+		if os.path.exists('./messages/langset_%s' % self.getvar('language')):
+			try:
+				output = open("./messages/%s.%s.msg" % (title.lower(), self.getvar('language')), 'r+')
+			except IOError:
+				print "ERROR: Message file not found."
+			try:
+				msgs = output.readlines()
+			finally:
+				output.close()
+		else:
+			print "Language set for language %s does not exist." % self.getvar('language')
+			msgs = 'Language set for language %s does not exist, or message file is not found.' % self.getvar('language')
 		if getmsg == True:
 			return msgs
 
@@ -320,6 +324,9 @@ class Commands(object):
 				self.notice(target, msg)
 			else:
                         	self.privmsg(target, msg)
+
+	def whois(self, nick):
+		self.client.send('WHOIS %s' % nick)
 
 class IRCError(Exception):
 	def __init__(self, text):
