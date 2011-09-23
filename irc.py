@@ -7,6 +7,7 @@ import socket
 import os
 import re
 import pymongo
+import time
 
 class Client(object):
 	def __init__(self, nick=None, password=None, ident=None, realname=None, host=None, port=6667, modules=[], alternateNick=None):
@@ -325,9 +326,10 @@ class Commands(object):
 			else:
                         	self.privmsg(target, msg)
 
-	def whois(self, nick):
-		self.client.send('WHOIS %s' % nick)
-
+	def whois(self, target, nick):
+		whois = self.client.send('WHOIS %s' % nick)
+		if self.client.listen('318'):
+			self.privmsg(target, whois)
 class IRCError(Exception):
 	def __init__(self, text):
 		self.text = text
